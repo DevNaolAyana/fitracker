@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  
+  /* Brand/Accent color */
+  --color-brand: #FF4D2E;
+  --color-brand-hover: #E03E22;
+  
+  /* Semantic tokens that adjust based on dark mode */
+  --color-app-bg: var(--bg-color);
+  --color-app-surface: var(--surface-color);
+  --color-app-text: var(--text-color);
+  --color-app-text-muted: var(--text-muted-color);
+}
+
+/* Custom CSS variables for theme switching */
+:root {
+  --bg-color: #FFFFFF;
+  --surface-color: #F4F4F6;
+  --text-color: #0F0F14;
+  --text-muted-color: #5A5A65;
+  color-scheme: light;
+}
+
+/* When .dark is applied to html */
+.dark {
+  --bg-color: #0B0B0F;
+  --surface-color: #16161D;
+  --text-color: #F5F5F7;
+  --text-muted-color: #9A9AA5;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Add custom animations for a premium Nike/Strava training feel */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
