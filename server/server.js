@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 
@@ -13,10 +14,11 @@ connectDB();
 const app = express();
 
 // Middlewares
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
-// Temporary CORS configuration (will update later with helmet/rate limiter)
+// CORS configuration - explicit origin matching client
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true
