@@ -1,58 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
-import Button from '../components/Button';
+import Navbar from '../components/Navbar';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
-  const { isDark, toggleTheme } = useTheme();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
+  const { user } = useAuth();
 
   return (
     <div className="min-h-screen bg-[var(--bg-color)]">
-      {/* Navbar */}
-      <header className="border-b border-[var(--text-muted-color)]/10 bg-[var(--surface-color)]/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-[#FF4D2E] flex items-center justify-center shadow shadow-[#FF4D2E]/30">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <span className="font-bold text-[var(--text-color)] tracking-tight">Fitraker</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Theme Toggle */}
-            <button
-              id="theme-toggle"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className="p-2 rounded-xl text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:bg-[var(--bg-color)] transition-all duration-200"
-            >
-              {isDark ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </button>
-
-            <Button variant="ghost" onClick={handleLogout} id="logout-btn" className="text-sm">
-              Logout
-            </Button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-6 py-16">
@@ -66,7 +21,7 @@ const Dashboard = () => {
                   Welcome back, {user?.name?.split(' ')[0]} 👋
                 </h1>
                 <p className="text-[var(--text-muted-color)]">
-                  Phase 2 features (workout logs, nutrition, calendar) are coming soon.
+                  Track your workouts, log your weight, and check your macro targets on the calendar.
                 </p>
               </div>
               <div className="flex items-center gap-3 bg-[var(--bg-color)] px-4 py-3 rounded-2xl border border-[var(--text-muted-color)]/10">
@@ -87,8 +42,8 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
               { phase: 'Phase 1', label: 'Foundation & Auth', status: 'complete', icon: '🔐' },
-              { phase: 'Phase 2', label: 'Profile & Calendar', status: 'next', icon: '📅' },
-              { phase: 'Phase 3', label: 'Workout Logging', status: 'upcoming', icon: '🏋️' },
+              { phase: 'Phase 2', label: 'Profile & Calendar Core', status: 'complete', icon: '📅' },
+              { phase: 'Phase 3', label: 'Food & Nutrition Logging', status: 'next', icon: '🍎' },
             ].map(({ phase, label, status, icon }) => (
               <div
                 key={phase}

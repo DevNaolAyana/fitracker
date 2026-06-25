@@ -1,11 +1,12 @@
-﻿# Fitraker
+# Fitraker
 
 A MERN-stack gym and nutrition tracker with Ethiopian/Gregorian calendar toggle, macro logging, stats, and recommendations.
 
 ## Status
-
+ 
 Phase 1: Foundation and Auth (v0.1.0) - Complete
-Phase 2: Profile and Calendar core (v0.2.0) - Coming soon
+Phase 2: Profile & Calendar core (v0.2.0) - Complete
+Phase 3: Food & Nutrition Logging (v0.3.0) - Coming soon
 
 ## Tech Stack
 
@@ -79,17 +80,28 @@ npm run dev
 Note: If RESEND_API_KEY is not set, the reset link is logged to the server console.
 
 ## API Routes
-
-All routes are prefixed with /api/auth:
-
-- POST /signup - Register user
-- POST /login - Login user
-- POST /logout - Clear cookie
-- GET /me - Get current user (protected)
-- POST /forgot-password - Send reset email via Resend
-- POST /reset-password/:token - Reset password
-
-Rate limited (5 req / 15 min per IP): signup, login, forgot-password
+ 
+### Auth Routes (`/api/auth`)
+- POST `/signup` - Register user (Rate limited: 20 req / 15 min)
+- POST `/login` - Login user (Rate limited: 20 req / 15 min)
+- POST `/logout` - Clear cookie
+- GET `/me` - Get current user (protected)
+- POST `/forgot-password` - Send reset email (Rate limited: 20 req / 15 min)
+- POST `/reset-password/:token` - Reset password
+ 
+### Profile Routes (`/api/profile`, protected)
+- GET `/` - Get user profile settings & calculated macro targets
+- PUT `/` - Update user height, age, gender, activity level, goal, and overrides
+- POST `/weight` - Upsert a weight entry for a date
+- GET `/weight-history` - Get all logged weigh-ins sorted by date ascending
+ 
+### Daily Log Routes (`/api/logs`, protected)
+- GET `/:date` - Get gym log for Gregorian date (returns default if not found)
+- PUT `/:date` - Upsert gym checkbox, muscle groups, and workout notes for a date
+ 
+### Calendar Routes (`/api/calendar`, protected)
+- GET `/today` - Get today's Gregorian date and translated Ethiopian date (cached 60s)
+- GET `/convert?date=YYYY-MM-DD&from=gregorian|ethiopian` - Convert between calendar systems
 
 ## Deployment
 

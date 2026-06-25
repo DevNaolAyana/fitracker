@@ -19,6 +19,17 @@ const userSchema = new mongoose.Schema(
     },
     resetToken: String,
     resetTokenExpiry: Date,
+    heightCm: Number,
+    age: Number,
+    gender: { type: String, enum: ['male', 'female', 'other'] },
+    activityLevel: { type: String, enum: ['sedentary', 'light', 'moderate', 'active', 'very_active'] },
+    goal: { type: String, enum: ['lose', 'maintain', 'gain'], default: 'maintain' },
+    targetOverrides: {
+      calories: Number,
+      protein: Number,
+      carbs: Number,
+      fat: Number
+    }
   },
   {
     timestamps: true,
