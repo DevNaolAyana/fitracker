@@ -15,7 +15,7 @@ const GREGORIAN_MONTHS = [
 ];
 
 const Calendar = () => {
-  const { calendarSystem, todayData, loadingToday, todayError, convert } = useCalendar();
+  const { calendarSystem, todayData, loadingToday, todayError, convert, fetchToday } = useCalendar();
 
   // Navigation states
   // Gregorian view state
@@ -268,12 +268,20 @@ const Calendar = () => {
 
           {/* Calendar Syncing Error Alert */}
           {todayError && (
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
-              <AlertCircle className="w-5 h-5 shrink-0" />
-              <div>
-                <p className="font-semibold">Calendar Sync Warning</p>
-                <p className="text-xs text-red-500/80 mt-0.5">{todayError}</p>
+            <div className="flex items-center justify-between p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <div>
+                  <p className="font-semibold">Calendar Sync Warning</p>
+                  <p className="text-xs text-red-500/80 mt-0.5">{todayError}</p>
+                </div>
               </div>
+              <button
+                onClick={fetchToday}
+                className="px-3 py-1.5 rounded-xl bg-red-500 text-white text-xs font-bold hover:bg-red-600 transition-colors cursor-pointer"
+              >
+                Retry Sync
+              </button>
             </div>
           )}
 

@@ -41,15 +41,7 @@ export const CalendarProvider = ({ children }) => {
     } catch (err) {
       console.error('Error fetching calendar today date:', err);
       setTodayError(err.message || 'Failed to sync calendar date');
-      // Graceful fallback to local date if API is completely down
-      const localDate = new Date();
-      const year = localDate.getFullYear();
-      const month = String(localDate.getMonth() + 1).padStart(2, '0');
-      const day = String(localDate.getDate()).padStart(2, '0');
-      setTodayData({
-        gregorianDate: `${year}-${month}-${day}`,
-        ethiopianDate: null,
-      });
+      setTodayData(null);
     } finally {
       setLoadingToday(false);
     }

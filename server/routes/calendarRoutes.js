@@ -24,7 +24,10 @@ const ETHIOPIAN_MONTHS = [
 let todayCache = null;
 let todayCacheTime = 0;
 
-// Simple in-memory cache for date conversions
+// Simple in-memory cache for date conversions.
+// No TTL is applied intentionally: a Gregorian↔Ethiopian conversion for a fixed
+// calendar date is a pure mathematical constant and never changes between calls.
+// The cache is bounded by the number of distinct dates requested per server process.
 const conversionCache = new Map();
 
 // Helper to fetch with timeout

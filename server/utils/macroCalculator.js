@@ -70,7 +70,11 @@ export function calculateMacros({ heightCm, age, gender, activityLevel, goal, ta
   const finalProtein = targetOverrides?.protein || Math.round(baseProtein);
   const finalFat = targetOverrides?.fat || Math.round(baseFat);
 
-  // Carbs are the remainder, or override if specified
+  // Carbs are the remainder, or override if specified.
+  // Note: when protein or fat are overridden but carbs are not, carbs are still recomputed
+  // from the effective (overridden) protein/fat values against the calorie target. This is
+  // intentional — it keeps total macros (P×4 + C×4 + F×9) consistent with the calorie target
+  // instead of silently leaving an unaccounted-for gap in the macro budget.
   let finalCarbs;
   if (targetOverrides?.carbs !== undefined && targetOverrides?.carbs !== null && targetOverrides?.carbs !== 0) {
     finalCarbs = targetOverrides.carbs;
