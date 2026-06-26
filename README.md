@@ -6,7 +6,7 @@ A MERN-stack gym and nutrition tracker with Ethiopian/Gregorian calendar toggle,
  
 Phase 1: Foundation and Auth (v0.1.0) - Complete
 Phase 2: Profile & Calendar core (v0.2.0) - Complete
-Phase 3: Food & Nutrition Logging (v0.3.0) - Coming soon
+Phase 3: Food & Nutrition Logging (v0.3.0) - Complete
 
 ## Tech Stack
 
@@ -98,6 +98,13 @@ Note: If RESEND_API_KEY is not set, the reset link is logged to the server conso
 ### Daily Log Routes (`/api/logs`, protected)
 - GET `/:date` - Get gym log for Gregorian date (returns default if not found)
 - PUT `/:date` - Upsert gym checkbox, muscle groups, and workout notes for a date
+- POST `/:date/food` - Add or combine food logs on the given date (snapshotting macros)
+- DELETE `/:date/food/:entryId` - Delete logged food entry by ID and recalculate totals
+
+### Foods Library Routes (`/api/foods`, protected)
+- GET `/` - Retrieve merged global foods and user's custom foods sorted alphabetically
+- POST `/custom` - Save a new custom food to the user's library
+- DELETE `/custom/:id` - Delete a custom food (req.userId ownership check)
  
 ### Calendar Routes (`/api/calendar`, protected)
 - GET `/today` - Get today's Gregorian date and translated Ethiopian date (cached 60s)
