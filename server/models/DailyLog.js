@@ -27,10 +27,51 @@ const dailyLogSchema = new mongoose.Schema(
       default: '',
     },
     // Nutrition/food fields for Phase 3
-    foods: {
-      type: Array,
-      default: [],
-    },
+    foods: [
+      {
+        name: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        caloriesPerUnit: {
+          type: Number,
+          required: true,
+        },
+        proteinPerUnit: {
+          type: Number,
+          required: true,
+        },
+        carbsPerUnit: {
+          type: Number,
+          required: true,
+        },
+        fatPerUnit: {
+          type: Number,
+          required: true,
+        },
+        totalCalories: {
+          type: Number,
+          required: true,
+        },
+        totalProtein: {
+          type: Number,
+          required: true,
+        },
+        totalCarbs: {
+          type: Number,
+          required: true,
+        },
+        totalFat: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
     totalCalories: {
       type: Number,
       default: 0,
