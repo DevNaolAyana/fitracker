@@ -9,6 +9,8 @@ import profileRoutes from './routes/profileRoutes.js';
 import dailyLogRoutes from './routes/dailyLogRoutes.js';
 import calendarRoutes from './routes/calendarRoutes.js';
 import foodRoutes from './routes/foodRoutes.js';
+import statsRoutes from './routes/statsRoutes.js';
+import recommendationsRoutes from './routes/recommendationsRoutes.js';
 
 dotenv.config();
 
@@ -34,6 +36,8 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/logs', dailyLogRoutes);
 app.use('/api/calendar', calendarRoutes);
 app.use('/api/foods', foodRoutes);
+app.use('/api/stats', statsRoutes);
+app.use('/api/recommendations', recommendationsRoutes);
 
 // Health Check Route
 app.get('/api/health', (req, res) => {

@@ -39,6 +39,7 @@ router.get('/', protect, async (req, res) => {
           carbs: null,
           fat: null,
         },
+        weeklyGymGoal: user.weeklyGymGoal ?? 4,
       },
       targets,
       needsWeightLog,
@@ -54,7 +55,7 @@ router.get('/', protect, async (req, res) => {
 // PUT /api/profile - update user profile fields
 router.put('/', protect, async (req, res) => {
   try {
-    const { heightCm, age, gender, activityLevel, goal, targetOverrides } = req.body;
+    const { heightCm, age, gender, activityLevel, goal, targetOverrides, weeklyGymGoal } = req.body;
 
     const user = await User.findById(req.userId);
     if (!user) {
@@ -66,6 +67,9 @@ router.put('/', protect, async (req, res) => {
     if (gender !== undefined) user.gender = gender;
     if (activityLevel !== undefined) user.activityLevel = activityLevel;
     if (goal !== undefined) user.goal = goal;
+    if (weeklyGymGoal !== undefined && weeklyGymGoal !== null) {
+      user.weeklyGymGoal = parseInt(weeklyGymGoal, 10);
+    }
 
     if (targetOverrides !== undefined) {
       user.targetOverrides = {
@@ -99,6 +103,7 @@ router.put('/', protect, async (req, res) => {
         activityLevel: user.activityLevel,
         goal: user.goal,
         targetOverrides: user.targetOverrides,
+        weeklyGymGoal: user.weeklyGymGoal ?? 4,
       },
       targets,
       needsWeightLog,
