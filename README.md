@@ -7,10 +7,11 @@ A MERN-stack gym and nutrition tracker with Ethiopian/Gregorian calendar toggle,
 Phase 1: Foundation and Auth (v0.1.0) - Complete
 Phase 2: Profile & Calendar core (v0.2.0) - Complete
 Phase 3: Food & Nutrition Logging (v0.3.0) - Complete
+Phase 4: Stats, Dashboard & Recommendations (v0.4.0) - Complete
 
 ## Tech Stack
 
-- Frontend: React + Vite + Tailwind CSS v4 (deployed on Vercel)
+- Frontend: React + Vite + Tailwind CSS v4 + Recharts (deployed on Vercel)
 - Backend: Express + Node.js (deployed on Render)
 - Database: MongoDB Atlas (free tier)
 - Auth: JWT in HTTP-only cookies, bcrypt
@@ -109,6 +110,15 @@ Note: If RESEND_API_KEY is not set, the reset link is logged to the server conso
 ### Calendar Routes (`/api/calendar`, protected)
 - GET `/today` - Get today's Gregorian date and translated Ethiopian date (cached 60s)
 - GET `/convert?date=YYYY-MM-DD&from=gregorian|ethiopian` - Convert between calendar systems
+
+### Stats Routes (`/api/stats`, protected)
+- GET `/weekly?date=YYYY-MM-DD` - Stats for the Mon–Sun week containing the given date (defaults to current week). Returns gymDaysCount, total/avg macros, and dailyBreakdown.
+- GET `/monthly?year=YYYY&month=MM` - Same shape aggregated over the calendar month.
+- GET `/heatmap` - Last 30 days: [{ date, gym, totalCalories }] for the activity heatmap.
+- GET `/consistency` - { currentWeekGymDays, weeklyGoal, metGoalThisWeek, consecutiveWeeksMetGoal }
+
+### Recommendations Routes (`/api/recommendations`, protected)
+- GET `/today` - { macroMessage, hintWeightLog, gymMessage, quote, todayTotals, targets } — rule-based insights comparing logged data to user targets. Quote sourced from ZenQuotes.io (cached 1 hour).
 
 ## Deployment
 
