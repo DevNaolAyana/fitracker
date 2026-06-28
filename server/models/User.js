@@ -29,7 +29,8 @@ const userSchema = new mongoose.Schema(
       protein: Number,
       carbs: Number,
       fat: Number
-    }
+    },
+    weeklyGymGoal: { type: Number, default: 4 },
   },
   {
     timestamps: true,
