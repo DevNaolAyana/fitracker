@@ -16,6 +16,7 @@ const Profile = () => {
   const [gender, setGender] = useState('male');
   const [activityLevel, setActivityLevel] = useState('moderate');
   const [goal, setGoal] = useState('maintain');
+  const [weeklyGymGoal, setWeeklyGymGoal] = useState(4);
 
   // Target overrides state
   const [overrideCalories, setOverrideCalories] = useState('');
@@ -52,6 +53,7 @@ const Profile = () => {
         setGender(prof.gender || 'male');
         setActivityLevel(prof.activityLevel || 'moderate');
         setGoal(prof.goal || 'maintain');
+        setWeeklyGymGoal(prof.weeklyGymGoal ?? 4);
 
         setOverrideCalories(prof.targetOverrides?.calories || '');
         setOverrideProtein(prof.targetOverrides?.protein || '');
@@ -124,6 +126,7 @@ const Profile = () => {
           gender,
           activityLevel,
           goal,
+          weeklyGymGoal: weeklyGymGoal ? parseInt(weeklyGymGoal, 10) : 4,
           targetOverrides: overrides,
         }),
       });
@@ -337,6 +340,19 @@ const Profile = () => {
                       <option value="gain">Gain Weight (+300 kcal)</option>
                     </select>
                   </div>
+                </div>
+
+                {/* Weekly gym goal */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <Input
+                    label="Weekly Gym Goal (days)"
+                    type="number"
+                    value={weeklyGymGoal}
+                    onChange={(e) => setWeeklyGymGoal(e.target.value)}
+                    placeholder="e.g. 4"
+                    min="1"
+                    max="7"
+                  />
                 </div>
 
                 {/* Macro Target Overrides */}
