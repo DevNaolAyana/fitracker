@@ -26,6 +26,17 @@ function toDateStr(date) {
   return date.toISOString().slice(0, 10);
 }
 
+function getDatesInRange(startStr, endStr) {
+  const dates = [];
+  const curr = new Date(startStr + 'T00:00:00Z');
+  const end = new Date(endStr + 'T00:00:00Z');
+  while (curr <= end) {
+    dates.push(curr.toISOString().slice(0, 10));
+    curr.setUTCDate(curr.getUTCDate() + 1);
+  }
+  return dates;
+}
+
 /**
  * Aggregates an array of DailyLog documents into a stats object.
  * @param {Array} logs - DailyLog documents
@@ -39,7 +50,9 @@ function aggregateLogs(logs, periodStart, periodEnd) {
   let totalCarbs = 0;
   let totalFat = 0;
 
+  const logsMap = {};
   for (const log of logs) {
+    logsMap[log.date] = log;
     if (log.gym) gymDaysCount++;
     totalCalories += log.totalCalories || 0;
     totalProtein  += log.totalProtein  || 0;
@@ -48,6 +61,19 @@ function aggregateLogs(logs, periodStart, periodEnd) {
   }
 
   const n = logs.length || 1; // avoid division by zero
+
+  const allDates = getDatesInRange(periodStart, periodEnd);
+  const dailyBreakdown = allDates.map(date => {
+    const log = logsMap[date];
+    return {
+      date,
+      gym:           log?.gym || false,
+      totalCalories: log?.totalCalories || 0,
+      totalProtein:  log?.totalProtein  || 0,
+      totalCarbs:    log?.totalCarbs    || 0,
+      totalFat:      log?.totalFat      || 0,
+    };
+  });
 
   return {
     periodStart,
@@ -61,14 +87,7 @@ function aggregateLogs(logs, periodStart, periodEnd) {
     avgProtein:    Math.round(totalProtein  / n),
     avgCarbs:      Math.round(totalCarbs    / n),
     avgFat:        Math.round(totalFat      / n),
-    dailyBreakdown: logs.map(log => ({
-      date:          log.date,
-      gym:           log.gym || false,
-      totalCalories: log.totalCalories || 0,
-      totalProtein:  log.totalProtein  || 0,
-      totalCarbs:    log.totalCarbs    || 0,
-      totalFat:      log.totalFat      || 0,
-    })),
+    dailyBreakdown,
   };
 }
 

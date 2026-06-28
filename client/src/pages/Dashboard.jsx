@@ -123,7 +123,7 @@ function CustomTooltip({ active, payload, label }) {
 // ---------------------------------------------------------------------------
 const Dashboard = () => {
   const { user } = useAuth();
-  const { calendarSystem } = useCalendar();
+  const { calendarSystem, convert } = useCalendar();
 
   // Data states
   const [recs, setRecs] = useState(null);
@@ -209,12 +209,7 @@ const Dashboard = () => {
     Promise.all(
       missing.map(async (d) => {
         try {
-          const res = await fetch(
-            `${API_URL}/api/calendar/convert?date=${d}&from=gregorian`,
-            { credentials: 'include' }
-          );
-          if (!res.ok) return null;
-          const data = await res.json();
+          const data = await convert(d, 'gregorian');
           return {
             date: d,
             label: `${data.ethiopianDate.monthName.slice(0, 3)} ${data.ethiopianDate.day}`,
@@ -226,7 +221,7 @@ const Dashboard = () => {
       for (const r of results) if (r) map[r.date] = r.label;
       setEthLabels(prev => ({ ...prev, ...map }));
     });
-  }, [calendarSystem, weeklyStats, ethLabels]);
+  }, [calendarSystem, weeklyStats, ethLabels, convert]);
 
   // ---------------------------------------------------------------------------
   // Derived: weekly chart data
