@@ -151,7 +151,7 @@ const DayDetail = ({ date, onClose, onSaveSuccess }) => {
               {displayDates.gregStr}
             </h2>
             {displayDates.ethioStr && (
-              <p className="text-sm font-semibold text-[#FF4D2E] mt-0.5">
+              <p className="text-sm font-semibold text-[#FF5236] mt-0.5">
                 🇪🇹 {displayDates.ethioStr}
               </p>
             )}
@@ -221,10 +221,11 @@ const DayDetail = ({ date, onClose, onSaveSuccess }) => {
 
             {/* Workout Notes */}
             <div className="space-y-2">
-              <label className="block text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">
+              <label htmlFor="workout-notes" className="block text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">
                 Workout Notes
               </label>
               <textarea
+                id="workout-notes"
                 value={workoutNotes}
                 onChange={(e) => setWorkoutNotes(e.target.value)}
                 placeholder="Log exercises, sets, weights, or how you felt..."
@@ -243,7 +244,7 @@ const DayDetail = ({ date, onClose, onSaveSuccess }) => {
               <div className="grid grid-cols-4 gap-3 bg-[var(--surface-color)]/40 p-4 rounded-2xl border border-[var(--text-muted-color)]/10">
                 <div className="text-center">
                   <span className="block text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Calories</span>
-                  <span className="text-base font-bold text-[#FF4D2E]">{totalCalories}</span>
+                  <span className="text-base font-bold text-[#FF5236]">{totalCalories}</span>
                   <span className="block text-[9px] text-[var(--text-muted-color)]">kcal</span>
                 </div>
                 <div className="text-center">

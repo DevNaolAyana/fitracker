@@ -106,7 +106,7 @@ const ResetPassword = () => {
               </Button>
 
               <p className="text-center text-sm text-[var(--text-muted-color)]">
-                <Link to="/login" className="text-[#FF4D2E] hover:underline font-medium">
+                <Link to="/login" className="text-[#FF5236] hover:underline font-medium">
                   Back to Login
                 </Link>
               </p>

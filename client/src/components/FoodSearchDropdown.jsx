@@ -268,7 +268,7 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
                       className="w-full px-4 py-3 text-left hover:bg-[var(--surface-color)]/60 flex items-center justify-between group transition-colors"
                     >
                       <div>
-                        <p className="text-sm font-medium text-[var(--text-color)] group-hover:text-[#FF4D2E] transition-colors">
+                        <p className="text-sm font-medium text-[var(--text-color)] group-hover:text-[#FF5236] transition-colors">
                           {food.name}
                         </p>
                         <p className="text-xs text-[var(--text-muted-color)]">
@@ -277,7 +277,7 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
                       </div>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
                         food.source === 'custom' 
-                          ? 'bg-[#FF4D2E]/10 text-[#FF4D2E]' 
+                          ? 'bg-[#FF4D2E]/10 text-[#FF5236]' 
                           : 'bg-[var(--text-muted-color)]/10 text-[var(--text-muted-color)]'
                       }`}>
                         {food.source}
@@ -301,7 +301,7 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
                         setCustomName(search);
                       }
                     }}
-                    className="w-full px-4 py-3.5 text-left text-xs font-semibold text-[#FF4D2E] hover:bg-[#FF4D2E]/5 flex items-center gap-2 border-t border-[var(--text-muted-color)]/10 transition-colors"
+                    className="w-full px-4 py-3.5 text-left text-xs font-semibold text-[#FF5236] hover:bg-[#FF4D2E]/5 flex items-center gap-2 border-t border-[var(--text-muted-color)]/10 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Create & log new custom food "{search || '...'}"</span>
@@ -315,10 +315,11 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
           {selectedFood && (
             <div className="flex items-end gap-3 p-4 rounded-2xl bg-[var(--surface-color)]/30 border border-[var(--text-muted-color)]/5 animate-fade-in">
               <div className="flex-1 space-y-1">
-                <p className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">
+                <label htmlFor="food-quantity" className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">
                   Quantity ({selectedFood.servingUnit})
-                </p>
+                </label>
                 <input
+                  id="food-quantity"
                   type="number"
                   min="0.01"
                   step="any"
@@ -357,8 +358,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
 
           <div className="grid grid-cols-2 gap-3.5">
             <div className="col-span-2 space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Food Name</label>
+              <label htmlFor="custom-food-name" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Food Name</label>
               <input
+                id="custom-food-name"
                 type="text"
                 placeholder="e.g. Grandma's Lasagna"
                 value={customName}
@@ -367,8 +369,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Serving Unit</label>
+              <label htmlFor="custom-serving-unit" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Serving Unit</label>
               <input
+                id="custom-serving-unit"
                 type="text"
                 placeholder="e.g. 1 slice, 150g"
                 value={customServingUnit}
@@ -377,8 +380,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Quantity to Log</label>
+              <label htmlFor="custom-qty" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Quantity to Log</label>
               <input
+                id="custom-qty"
                 type="number"
                 min="0.01"
                 step="any"
@@ -388,8 +392,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Calories (kcal)</label>
+              <label htmlFor="custom-calories" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Calories (kcal)</label>
               <input
+                id="custom-calories"
                 type="number"
                 min="0"
                 placeholder="0"
@@ -399,8 +404,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Protein (g)</label>
+              <label htmlFor="custom-protein" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Protein (g)</label>
               <input
+                id="custom-protein"
                 type="number"
                 min="0"
                 step="any"
@@ -411,8 +417,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Carbs (g)</label>
+              <label htmlFor="custom-carbs" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Carbs (g)</label>
               <input
+                id="custom-carbs"
                 type="number"
                 min="0"
                 step="any"
@@ -423,8 +430,9 @@ const FoodSearchDropdown = ({ date, onFoodAdded }) => {
               />
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Fat (g)</label>
+              <label htmlFor="custom-fat" className="text-[10px] font-semibold text-[var(--text-muted-color)] uppercase tracking-wider">Fat (g)</label>
               <input
+                id="custom-fat"
                 type="number"
                 min="0"
                 step="any"

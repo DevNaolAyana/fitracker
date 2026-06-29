@@ -334,7 +334,7 @@ const Calendar = () => {
                         onClick={() => handleDayClick(day)}
                         className={`aspect-square rounded-2xl border flex flex-col items-center justify-center p-2 cursor-pointer transition-all duration-200 hover:scale-[1.03] select-none ${
                           isToday
-                            ? 'bg-[#FF4D2E]/10 border-[#FF4D2E]/40 text-[#FF4D2E]'
+                            ? 'bg-[#FF4D2E]/10 border-[#FF4D2E]/40 text-[#FF5236]'
                             : 'bg-[var(--bg-color)] border-[var(--text-muted-color)]/10 text-[var(--text-color)] hover:border-[var(--text-muted-color)]/30 hover:bg-[var(--surface-color)]/40'
                         }`}
                       >

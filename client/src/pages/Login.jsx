@@ -82,7 +82,7 @@ const Login = () => {
             />
 
             <div className="text-right -mt-1">
-              <Link to="/forgot-password" className="text-xs text-[var(--text-muted-color)] hover:text-[#FF4D2E] transition-colors">
+              <Link to="/forgot-password" className="text-xs text-[var(--text-muted-color)] hover:text-[#FF5236] transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -100,7 +100,7 @@ const Login = () => {
 
           <p className="text-center text-sm text-[var(--text-muted-color)] mt-6">
             Don&apos;t have an account?{' '}
-            <Link to="/signup" className="text-[#FF4D2E] hover:underline font-medium">
+            <Link to="/signup" className="text-[#FF5236] hover:underline font-medium">
               Sign up
             </Link>
           </p>

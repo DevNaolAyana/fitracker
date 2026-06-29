@@ -53,7 +53,7 @@ const ForgotPassword = () => {
               <p className="text-sm text-[var(--text-muted-color)]">
                 If an account exists for <strong>{email}</strong>, a password reset link has been sent.
               </p>
-              <Link to="/login" className="text-[#FF4D2E] hover:underline text-sm font-medium mt-2">
+              <Link to="/login" className="text-[#FF5236] hover:underline text-sm font-medium mt-2">
                 Back to Login
               </Link>
             </div>
@@ -81,7 +81,7 @@ const ForgotPassword = () => {
               </Button>
 
               <p className="text-center text-sm text-[var(--text-muted-color)]">
-                <Link to="/login" className="text-[#FF4D2E] hover:underline font-medium">
+                <Link to="/login" className="text-[#FF5236] hover:underline font-medium">
                   Back to Login
                 </Link>
               </p>

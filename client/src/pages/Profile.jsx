@@ -209,7 +209,7 @@ const Profile = () => {
           {/* Header & Global Calendar toggle */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--surface-color)] rounded-3xl p-6 border border-[var(--text-muted-color)]/10">
             <div>
-              <p className="text-xs font-semibold text-[#FF4D2E] uppercase tracking-wider mb-0.5">Settings & Macros</p>
+              <p className="text-xs font-semibold text-[#FF5236] uppercase tracking-wider mb-0.5">Settings & Macros</p>
               <h1 className="text-2xl font-extrabold text-[var(--text-color)] tracking-tight">Your Profile</h1>
             </div>
             
@@ -301,8 +301,9 @@ const Profile = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Gender</label>
+                    <label htmlFor="profile-gender" className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Gender</label>
                     <select
+                      id="profile-gender"
                       value={gender}
                       onChange={(e) => setGender(e.target.value)}
                       className="w-full h-11 px-4 rounded-xl border border-[var(--text-muted-color)]/15 bg-[var(--bg-color)] text-sm text-[var(--text-color)] focus:outline-none focus:border-[#FF4D2E] transition-colors"
@@ -314,8 +315,9 @@ const Profile = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Activity Level</label>
+                    <label htmlFor="profile-activity" className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Activity Level</label>
                     <select
+                      id="profile-activity"
                       value={activityLevel}
                       onChange={(e) => setActivityLevel(e.target.value)}
                       className="w-full h-11 px-4 rounded-xl border border-[var(--text-muted-color)]/15 bg-[var(--bg-color)] text-sm text-[var(--text-color)] focus:outline-none focus:border-[#FF4D2E] transition-colors"
@@ -329,8 +331,9 @@ const Profile = () => {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Goal</label>
+                    <label htmlFor="profile-goal" className="text-xs font-semibold text-[var(--text-muted-color)] uppercase tracking-wide">Goal</label>
                     <select
+                      id="profile-goal"
                       value={goal}
                       onChange={(e) => setGoal(e.target.value)}
                       className="w-full h-11 px-4 rounded-xl border border-[var(--text-muted-color)]/15 bg-[var(--bg-color)] text-sm text-[var(--text-color)] focus:outline-none focus:border-[#FF4D2E] transition-colors"
@@ -366,7 +369,7 @@ const Profile = () => {
                       <button
                         type="button"
                         onClick={handleResetOverrides}
-                        className="flex items-center gap-1 text-xs text-[#FF4D2E] font-semibold hover:underline"
+                        className="flex items-center gap-1 text-xs text-[#FF5236] font-semibold hover:underline"
                       >
                         <RotateCcw className="w-3 h-3" /> Clear Overrides
                       </button>
