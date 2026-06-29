@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Dumbbell, Calendar, User, LogOut, Sun, Moon } from 'lucide-react';
+import { Dumbbell, Calendar, User, LogOut, Sun, Moon, CheckSquare } from 'lucide-react';
 
 const Navbar = () => {
   const { logout } = useAuth();
@@ -17,7 +17,7 @@ const Navbar = () => {
   const linkClass = ({ isActive }) =>
     `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
       isActive
-        ? 'bg-[#FF4D2E]/10 text-[#FF4D2E]'
+        ? 'bg-[#FF4D2E]/10 text-[#FF5236]'
         : 'text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:bg-[var(--surface-color)]'
     }`;
 
@@ -48,6 +48,10 @@ const Navbar = () => {
             <Calendar className="w-4 h-4" />
             Calendar
           </NavLink>
+          <NavLink to="/todos" className={linkClass}>
+            <CheckSquare className="w-4 h-4" />
+            Todos
+          </NavLink>
         </nav>
 
         {/* Right Actions */}
@@ -62,6 +66,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink to="/calendar" className="p-2 rounded-xl text-[var(--text-muted-color)] hover:text-[var(--text-color)]" title="Calendar">
               <Calendar className="w-5 h-5" />
+            </NavLink>
+            <NavLink to="/todos" className="p-2 rounded-xl text-[var(--text-muted-color)] hover:text-[var(--text-color)]" title="Todos">
+              <CheckSquare className="w-5 h-5" />
             </NavLink>
           </div>
 
