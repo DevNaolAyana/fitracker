@@ -8,6 +8,8 @@ Phase 1: Foundation and Auth (v0.1.0) - Complete
 Phase 2: Profile & Calendar core (v0.2.0) - Complete
 Phase 3: Food & Nutrition Logging (v0.3.0) - Complete
 Phase 4: Stats, Dashboard & Recommendations (v0.4.0) - Complete
+Phase 5: Todos, Export, PWA & Final Polish (v1.0.0) - Complete
+
 
 ## Tech Stack
 
@@ -20,23 +22,24 @@ Phase 4: Stats, Dashboard & Recommendations (v0.4.0) - Complete
 
 ## Project Structure
 
-`
+```
 fitraker/
     package.json              # root - concurrently dev script
     client/                   # Vite React app (Vercel)
         src/
-            context/          # AuthContext, ThemeContext
-            pages/            # Login, Signup, ForgotPassword, ResetPassword, Dashboard
-            components/       # Button, Input, ProtectedRoute
+            context/          # AuthContext, ThemeContext, CalendarContext
+            pages/            # Login, Signup, ForgotPassword, ResetPassword, Dashboard, Profile, Calendar, Todos, NotFound
+            components/       # Button, Input, ProtectedRoute, ErrorBoundary, Navbar, FoodSearchDropdown, MuscleGroupSelector
+            utils/            # exportCsv.js
         .env.example
     server/                   # Express API (Render)
         config/db.js
-        models/User.js
-        controllers/authController.js
-        routes/authRoutes.js
+        models/               # User, Log, Food, Todo
+        routes/               # authRoutes, profileRoutes, logRoutes, foodRoutes, calendarRoutes, statsRoutes, recommendationsRoutes, todoRoutes
         middleware/auth.js
         .env.example
-`
+```
+
 
 ## Local Development Setup
 
@@ -119,6 +122,14 @@ Note: If RESEND_API_KEY is not set, the reset link is logged to the server conso
 
 ### Recommendations Routes (`/api/recommendations`, protected)
 - GET `/today` - { macroMessage, hintWeightLog, gymMessage, quote, todayTotals, targets } — rule-based insights comparing logged data to user targets. Quote sourced from ZenQuotes.io (cached 1 hour).
+ 
+### Todo Routes (`/api/todos`, protected)
+- GET `/` - Retrieve active (done: false) todos sorted by date asc, time asc
+- GET `/history` - Retrieve completed (done: true) todos sorted by completedAt desc
+- POST `/` - Create a new todo { title, date, time? }
+- PUT `/:id` - Edit todo details (title, date, time)
+- PATCH `/:id/toggle` - Toggle done status (sets/clears completedAt)
+- DELETE `/:id` - Delete todo item
 
 ## Deployment
 
