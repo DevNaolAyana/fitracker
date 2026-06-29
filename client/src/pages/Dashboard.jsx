@@ -5,6 +5,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useCalendar } from '../context/CalendarContext';
 import Navbar from '../components/Navbar';
+import { exportCsv } from '../utils/exportCsv';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
@@ -113,7 +114,7 @@ function CustomTooltip({ active, payload, label }) {
   return (
     <div className="bg-[var(--surface-color)] border border-[var(--text-muted-color)]/15 rounded-2xl px-4 py-3 shadow-xl text-sm">
       <p className="font-bold text-[var(--text-color)] mb-1">{label}</p>
-      <p className="text-[#FF4D2E] font-semibold">{payload[0].value} kcal</p>
+      <p className="text-[#FF5236] font-semibold">{payload[0].value} kcal</p>
     </div>
   );
 }
@@ -262,7 +263,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-br from-[#FF4D2E]/10 to-[#FF4D2E]/5 rounded-3xl p-8 border border-[#FF4D2E]/15 shadow-xl">
           <div className="flex items-start justify-between flex-wrap gap-5">
             <div>
-              <p className="text-xs font-bold text-[#FF4D2E] mb-1.5 tracking-widest uppercase">Dashboard</p>
+              <p className="text-xs font-bold text-[#FF5236] mb-1.5 tracking-widest uppercase">Dashboard</p>
               <h1 className="text-3xl font-black text-[var(--text-color)] tracking-tight mb-1">
                 Welcome back, {user?.name?.split(' ')[0]} 👋
               </h1>
@@ -397,7 +398,7 @@ const Dashboard = () => {
                         href="https://zenquotes.io"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="underline hover:text-[#FF4D2E] transition-colors"
+                        className="underline hover:text-[#FF5236] transition-colors"
                       >
                         ZenQuotes.io
                       </a>
@@ -414,7 +415,18 @@ const Dashboard = () => {
 
           {/* Weekly bar chart — takes 2/3 */}
           <Card className="p-6 md:col-span-2">
-            <SectionHeader icon="📈" title="This Week" sub="Daily calories (Mon – Sun)" />
+            <div className="flex items-center justify-between mb-1">
+              <SectionHeader icon="📈" title="This Week" sub="Daily calories (Mon – Sun)" />
+              {weeklyStats?.dailyBreakdown?.length > 0 && (
+                <button
+                  onClick={() => exportCsv(weeklyStats.dailyBreakdown, `fitraker-weekly-${weeklyStats.weekStart}`)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--bg-color)] border border-[var(--text-muted-color)]/15 text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:border-[var(--text-muted-color)]/30 transition-all -mt-5"
+                  title="Export weekly stats as CSV"
+                >
+                  ⬇ CSV
+                </button>
+              )}
+            </div>
             {loadingWeekly ? <Spinner /> : (
               weeklyChartData.every(d => d.calories === 0) ? (
                 <div className="flex flex-col items-center justify-center py-10 text-center gap-2">
@@ -505,10 +517,12 @@ const Dashboard = () => {
           <SectionHeader icon="🗓️" title="30-Day Activity Heatmap" sub="Last 30 days — hover for details" />
           {loadingHeatmap ? <Spinner /> : (
             <>
-              <div
-                className="grid gap-1.5"
-                style={{ gridTemplateColumns: 'repeat(30, minmax(0, 1fr))' }}
-              >
+              {/* overflow-x-auto so the 30-column grid scrolls on narrow mobile viewports */}
+              <div className="overflow-x-auto -mx-1 px-1">
+                <div
+                  className="grid gap-1.5"
+                  style={{ gridTemplateColumns: 'repeat(30, minmax(20px, 1fr))', minWidth: '480px' }}
+                >
                 {allDays.map((date) => {
                   const entry = heatmapMap[date];
                   const isToday = date === toDateStr(new Date());
@@ -546,6 +560,7 @@ const Dashboard = () => {
                   );
                 })}
               </div>
+              </div> {/* end overflow-x-auto */}
 
               {/* Legend */}
               <div className="flex items-center gap-4 mt-4 flex-wrap">
@@ -567,7 +582,32 @@ const Dashboard = () => {
 
         {/* ── Monthly Summary ──────────────────────────────────────────────── */}
         <Card className="p-6">
-          <SectionHeader icon="📅" title="This Month" sub="Calendar month totals" />
+          <div className="flex items-center justify-between mb-1">
+            <SectionHeader icon="📅" title="This Month" sub="Calendar month totals" />
+            {monthlyStats && (
+              <button
+                onClick={() => exportCsv(
+                  [{
+                    month: monthlyStats.monthStart?.slice(0, 7) ?? '',
+                    gymDays: monthlyStats.gymDaysCount,
+                    totalCalories: monthlyStats.totalCalories,
+                    totalProtein: monthlyStats.totalProtein,
+                    totalCarbs: monthlyStats.totalCarbs,
+                    totalFat: monthlyStats.totalFat,
+                    avgCalories: monthlyStats.avgCalories,
+                    avgProtein: monthlyStats.avgProtein,
+                    avgCarbs: monthlyStats.avgCarbs,
+                    avgFat: monthlyStats.avgFat,
+                  }],
+                  `fitraker-monthly-${monthlyStats.monthStart?.slice(0, 7) ?? 'stats'}`
+                )}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[var(--bg-color)] border border-[var(--text-muted-color)]/15 text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:border-[var(--text-muted-color)]/30 transition-all -mt-5"
+                title="Export monthly stats as CSV"
+              >
+                ⬇ CSV
+              </button>
+            )}
+          </div>
           {loadingMonthly ? <Spinner /> : monthlyStats ? (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
