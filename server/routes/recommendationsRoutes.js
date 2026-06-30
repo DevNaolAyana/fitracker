@@ -5,6 +5,7 @@ import WeightLog from '../models/WeightLog.js';
 import User from '../models/User.js';
 import { calculateMacros } from '../utils/macroCalculator.js';
 import { getQuoteOfDay } from '../utils/quoteService.js';
+import { getWeekStart, toDateStr } from '../utils/dateUtils.js';
 
 const router = express.Router();
 
@@ -18,22 +19,6 @@ function getTodayStr() {
   const m = parts.find(p => p.type === 'month').value;
   const d = parts.find(p => p.type === 'day').value;
   return `${y}-${m}-${d}`;
-}
-
-/**
- * Returns the Monday of the ISO week containing `date`.
- */
-function getWeekStart(date) {
-  const d = new Date(date);
-  const day = d.getUTCDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  d.setUTCDate(d.getUTCDate() + diff);
-  d.setUTCHours(0, 0, 0, 0);
-  return d;
-}
-
-function toDateStr(date) {
-  return date.toISOString().slice(0, 10);
 }
 
 // ---------------------------------------------------------------------------
