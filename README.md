@@ -45,38 +45,38 @@ fitraker/
 
 ### 1. Install Dependencies
 
-`ash
+```bash
 git clone https://github.com/DevNaolAyana/fitracker.git
 cd fitracker
 npm install
 npm install --prefix client
 npm install --prefix server
-`
+```
 
 ### 2. Environment Variables
 
 Create server/.env:
 
-`
+```
 PORT=5000
 MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxx.mongodb.net/fitraker
 JWT_SECRET=your_super_secret_jwt_key_here
 RESEND_API_KEY=re_your_resend_api_key
 CLIENT_URL=http://localhost:5173
 NODE_ENV=development
-`
+```
 
 Create client/.env.local:
 
-`
+```
 VITE_API_URL=http://localhost:5000
-`
+```
 
 ### 3. Run
 
-`ash
+```bash
 npm run dev
-`
+```
 
 - Client: http://localhost:5173
 - Server: http://localhost:5000/api/health
