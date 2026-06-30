@@ -290,7 +290,7 @@ const Dashboard = () => {
             { phase: 'Phase 2', label: 'Profile & Calendar Core',   icon: '📅', status: 'live' },
             { phase: 'Phase 3', label: 'Food & Nutrition Logging',  icon: '🍎', status: 'live' },
             { phase: 'Phase 4', label: 'Stats & Dashboard',         icon: '📊', status: 'live' },
-            { phase: 'Phase 5', label: 'Reminders, CSV, PWA & Polish', icon: '✨', status: 'next' },
+            { phase: 'Phase 5', label: 'Reminders, CSV, PWA & Polish', icon: '✨', status: 'live' },
           ].map(({ phase, label, status, icon }) => (
             <div
               key={phase}
