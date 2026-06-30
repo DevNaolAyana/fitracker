@@ -55,6 +55,11 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'Date is required' });
     }
 
+    const today = new Date().toISOString().slice(0, 10);
+    if (date < today) {
+      return res.status(400).json({ message: 'Date cannot be in the past' });
+    }
+
     const todo = await Todo.create({
       userId: req.userId,
       title: title.trim(),

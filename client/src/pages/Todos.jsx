@@ -112,6 +112,7 @@ function AddTodoForm({ onAdd }) {
             id="todo-date"
             type="date"
             value={date}
+            min={today()}
             onChange={(e) => setDate(e.target.value)}
             className="w-full px-4 py-3 rounded-xl text-sm bg-[var(--bg-color)] text-[var(--text-color)] border border-[var(--text-muted-color)]/20 hover:border-[var(--text-muted-color)]/40 focus:outline-none focus:ring-2 focus:ring-[#FF5236]/40 focus:border-[#FF5236] transition-all"
           />
