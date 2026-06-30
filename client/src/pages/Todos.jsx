@@ -239,14 +239,14 @@ function TodoItem({ todo, onToggle, onEdit, onDelete }) {
   const [editingId, setEditingId] = useState(null);
   const [toggling, setToggling] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   const handleToggle = async () => {
     setToggling(true);
     try { await onToggle(todo._id); } finally { setToggling(false); }
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm('Delete this todo?')) return;
+  const handleConfirmDelete = async () => {
     setDeleting(true);
     try { await onDelete(todo._id); } finally { setDeleting(false); }
   };
@@ -311,34 +311,54 @@ function TodoItem({ todo, onToggle, onEdit, onDelete }) {
         </div>
 
         {/* Actions */}
-        {!todo.done && editingId !== todo._id && (
-          <div className="flex items-center gap-1 flex-shrink-0">
+        {showConfirmDelete ? (
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <span className="text-xs text-[var(--text-muted-color)] mr-1">Delete?</span>
             <button
-              onClick={() => setEditingId(todo._id)}
-              aria-label="Edit todo"
-              className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:bg-[var(--bg-color)] transition-all"
+              onClick={handleConfirmDelete}
+              disabled={deleting}
+              className="px-2 py-1 rounded text-xs font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all disabled:opacity-50"
             >
-              <Pencil className="w-3.5 h-3.5" />
+              {deleting ? <Loader2 className="w-3 h-3 animate-spin" /> : 'Yes'}
             </button>
             <button
-              onClick={handleDelete}
+              onClick={() => setShowConfirmDelete(false)}
               disabled={deleting}
-              aria-label="Delete todo"
-              className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-red-400 hover:bg-red-400/10 transition-all disabled:opacity-50"
+              className="px-2 py-1 rounded text-xs font-medium text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:bg-[var(--bg-color)] transition-all disabled:opacity-50"
             >
-              {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+              No
             </button>
           </div>
-        )}
-        {todo.done && (
-          <button
-            onClick={handleDelete}
-            disabled={deleting}
-            aria-label="Delete completed todo"
-            className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-red-400 hover:bg-red-400/10 transition-all disabled:opacity-50 flex-shrink-0"
-          >
-            {deleting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
-          </button>
+        ) : (
+          <>
+            {!todo.done && editingId !== todo._id && (
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button
+                  onClick={() => setEditingId(todo._id)}
+                  aria-label="Edit todo"
+                  className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:bg-[var(--bg-color)] transition-all"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => setShowConfirmDelete(true)}
+                  aria-label="Delete todo"
+                  className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-red-400 hover:bg-red-400/10 transition-all"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+            {todo.done && (
+              <button
+                onClick={() => setShowConfirmDelete(true)}
+                aria-label="Delete completed todo"
+                className="p-1.5 rounded-lg text-[var(--text-muted-color)] hover:text-red-400 hover:bg-red-400/10 transition-all flex-shrink-0"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
