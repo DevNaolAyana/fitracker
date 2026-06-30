@@ -6,25 +6,9 @@ import { useAuth } from '../context/AuthContext';
 import { useCalendar } from '../context/CalendarContext';
 import Navbar from '../components/Navbar';
 import { exportCsv } from '../utils/exportCsv';
+import { getWeekStart, toDateStr } from '../utils/dateUtils';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-function toDateStr(date) {
-  return date.toISOString().slice(0, 10);
-}
-
-/** Returns the Monday of the ISO week containing today. */
-function getWeekStart(date = new Date()) {
-  const d = new Date(date);
-  const day = d.getUTCDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  d.setUTCDate(d.getUTCDate() + diff);
-  d.setUTCHours(0, 0, 0, 0);
-  return d;
-}
 
 /** Last 30 days from (and including) today. */
 function getLast30Days() {

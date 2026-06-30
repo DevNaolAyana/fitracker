@@ -2,29 +2,9 @@ import express from 'express';
 import protect from '../middleware/auth.js';
 import DailyLog from '../models/DailyLog.js';
 import User from '../models/User.js';
+import { getWeekStart, toDateStr } from '../utils/dateUtils.js';
 
 const router = express.Router();
-
-/**
- * Returns the Monday of the ISO week containing `date`.
- * @param {Date} date
- * @returns {Date} Monday 00:00:00
- */
-function getWeekStart(date) {
-  const d = new Date(date);
-  const day = d.getUTCDay(); // 0=Sun, 1=Mon ... 6=Sat
-  const diff = (day === 0 ? -6 : 1 - day); // shift so Mon=0
-  d.setUTCDate(d.getUTCDate() + diff);
-  d.setUTCHours(0, 0, 0, 0);
-  return d;
-}
-
-/**
- * Formats a Date as YYYY-MM-DD (UTC).
- */
-function toDateStr(date) {
-  return date.toISOString().slice(0, 10);
-}
 
 function getDatesInRange(startStr, endStr) {
   const dates = [];
